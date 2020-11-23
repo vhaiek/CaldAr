@@ -10,10 +10,24 @@ router.get('/', (req,res) => res.json(buildings));
 //Get Buildings by ID
 router.get('/:id', (req,res) => {
   let filterData = buildings.filter((building) => building.id === parseInt(req.params.id));
-  if(filterData){
+  if(filterData.length > 0){
     res.json(filterData);
   }else{
-    res.status(400).JSON({msg: `No building with the ID of ${req.params.id}`});
+    res.status(400).json({msg: `No building with the ID of ${req.params.id}`});
+  }
+});
+
+//Get Buildings by attribute
+router.get('/address/:address', (req,res) => {
+  let filterData = buildings.filter((building) => {if(building.address.search(req.params.address) != -1 ){
+    return true;
+  }else {
+    return false;
+  }});
+  if(filterData.length > 0){
+    res.json(filterData);
+  }else{
+    res.status(400).json({msg: `No building with the Address of ${req.params.address}`});
   }
 });
 
