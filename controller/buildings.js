@@ -31,4 +31,14 @@ router.get('/address/:address', (req,res) => {
   }
 });
 
+//Delete Buildings by ID
+router.get('/delete/:id', (req,res) => {
+  let filterData = buildings.filter((building) => building.id !== parseInt(req.params.id));
+  if(filterData.length < buildings.length){
+    fs.writeFileSync('./data/buildings.json', JSON.stringify(filterData));
+    res.json(filterData);
+  } else {
+    res.status(400).json({msg: `Building ${req.params.id} couldn't be deleted`});
+  }
+});
 module.exports = router;
