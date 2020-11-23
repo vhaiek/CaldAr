@@ -24,7 +24,7 @@ router.get("/:id", (req,res)=>{
 function getCompanyByAtribute(cuit) {
     return companies.filter(company => company.cuit === cuit);
 };
-router.get("/:cuit", (req,res)=>{
+router.get("/cuit/:cuit", (req,res)=>{
     res.json(getCompanyByAtribute(parseInt(req.params.cuit)));
 });
 
