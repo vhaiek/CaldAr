@@ -35,8 +35,7 @@ function deleteCompany(id) {
     return companies.filter(company => company.id_company === id);
 };
 router.get("/:delete",(req,res) => {
-    res.json(deleteCompany(parseInt(re
-        q.params.id)));
+    res.json(deleteCompany(parseInt(req.params.id)));
 });
 
 module.exports = router;
