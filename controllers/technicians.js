@@ -1,22 +1,16 @@
-const { response } = require('express')
 const express = require ('express')
+const router = express.Router();
 const fs = require('fs');
-//const router = express.router();
-const app = express()
 let rawdata = fs.readFileSync('./data/technicians.json');
 let technicians = JSON.parse(rawdata);
 //let technicians = require ('../data/technicians.json')
 
-app.listen(4000, () => {
-    console.log('HOLA')
-})
-
 //getTechniciansAll
-app.get('/api/technicians', (request,response) => { 
+router.get('/', (request,response) => { 
     response.json(technicians)
 })
 //getTechnicianById
-app.get('/api/technicians/:id',(request, response) => {
+router.get('/id/:id',(request, response) => {
     const found = technicians.some(technical => technical.id === parseInt(request.params.id));
     
     if(found) {
@@ -26,22 +20,23 @@ app.get('/api/technicians/:id',(request, response) => {
     }  
 });
 //getTechnicianByAttribute
-app.get('/api/technicians/fullname/:fullname',(request, response) => {
+router.get('/fullname/:fullname',(request, response) => {
     let search = technicians.filter(technical => {
         if(technical.fullname.search(request.params.fullname) != -1){
            return true;
         }else{
             return false;
         }});
-        if(search.length > 0){
-            response.json(search);
-        }else{
-            response.status(400).json({ msg: ' There aren´t technicians with this name'});
+
+     if(search.length > 0){
+        response.json(search);
+    }else{
+        response.status(400).json({ msg: ' There aren´t technicians with this name'});
     }
 });
 
 //deleteTechnicianById
-app.get('/api/technicians/deletetechnical/:id',(request, response) => {
+router.get('/deletetechnical/:id',(request, response) => {
     const found = technicians.some(technical => technical.id === parseInt(request.params.id));
     
     if(found) {
@@ -55,7 +50,7 @@ app.get('/api/technicians/deletetechnical/:id',(request, response) => {
     }  
 });
 
-//module.exports = router;
+module.exports = router;
 
 /*//getTechnicianByAnyAttributr----Didn´t work
 
@@ -83,7 +78,5 @@ app.delete('api/technicians/delete/:id'),(request, response) => {
         response.status(400).json({ msg: 'ouch!!!'});
     }
 }; 
-
-//module.exports = router;
 */
 
