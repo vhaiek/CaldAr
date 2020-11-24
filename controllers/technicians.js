@@ -40,11 +40,12 @@ app.get('/api/technicians/deletetechnical/:id',(request, response) => {
     const found = technicians.some(technical => technical.id === parseInt(request.params.id));
     
     if(found) {
-        technicians = technicians.filter(technical => technical.id !== request.params.id);
+        technicians = technicians.filter(technical => technical.id !==parseInt(request.params.id));
         fs.writeFileSync('./data/technicians.json',JSON.stringify(technicians));
         response
+            .json(technicians.filter(technical => technical.id === parseInt(request.params.id)))
             .json({ msg: "id: " + request.params.id + " Technical deleted"}) 
-            .json(technicians);
+
     }else {
         response.status(400).json({ msg: 'Technical not found'});
     }  
