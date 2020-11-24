@@ -34,7 +34,7 @@ function deleteCompany(id) {
     fs.writeFileSync("./data/companies.json", JSON.stringify(companies));
     return companies.filter(company => company.id_company === id);
 };
-router.get("/:delete",(req,res) => {
+router.get("/delete/:id",(req,res) => {
     res.json(deleteCompany(parseInt(req.params.id)));
 });
 
