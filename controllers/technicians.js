@@ -27,14 +27,19 @@ app.get('/api/technicians/:id',(request, response) => {
 });
 //getTechnicianByAttribute
 app.get('/api/technicians/fullname/:fullname',(request, response) => {
-    const found = technicians.some(technical => technical.fullname === request.params.fullname);
-    
-    if(found) {
-        response.json(technicians.filter(technical => technical.fullname === request.params.fullname));
-    }else {
-        response.status(400).json({ msg: ' That technician does not exist'});
-    }  
+    let search = technicians.filter(technical => {
+        if(technical.fullname.search(request.params.fullname) != -1){
+           return true;
+        }else{
+            return false;
+        }});
+        if(search.length > 0){
+            response.json(search);
+        }else{
+            response.status(400).json({ msg: ' There aren´t technicians with this name'});
+    }
 });
+
 //deleteTechnicianById
 app.get('/api/technicians/deletetechnical/:id',(request, response) => {
     const found = technicians.some(technical => technical.id === parseInt(request.params.id));
@@ -43,7 +48,6 @@ app.get('/api/technicians/deletetechnical/:id',(request, response) => {
         technicians = technicians.filter(technical => technical.id !==parseInt(request.params.id));
         fs.writeFileSync('./data/technicians.json',JSON.stringify(technicians));
         response
-            .json(technicians.filter(technical => technical.id === parseInt(request.params.id)))
             .json({ msg: "id: " + request.params.id + " Technical deleted"}) 
 
     }else {
