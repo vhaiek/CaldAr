@@ -1,9 +1,13 @@
+const { response } = require('express')
 const express = require ('express')
+const fs = require('fs');
 //const router = express.router();
 const app = express()
-const technicians = require ('../data/technicians.json')
+let rawdata = fs.readFileSync('./data/technicians.json');
+let technicians = JSON.parse(rawdata);
+//let technicians = require ('../data/technicians.json')
 
-app.listen(5000, () => {
+app.listen(4000, () => {
     console.log('HOLA')
 })
 
@@ -31,6 +35,23 @@ app.get('/api/technicians/fullname/:fullname',(request, response) => {
         response.status(400).json({ msg: ' That technician does not exist'});
     }  
 });
+//deleteTechnicianById
+app.get('/api/technicians/deletetechnical/:id',(request, response) => {
+    const found = technicians.some(technical => technical.id === parseInt(request.params.id));
+    
+    if(found) {
+        technicians = technicians.filter(technical => technical.id !== request.params.id);
+        fs.writeFileSync('./data/technicians.json',JSON.stringify(technicians));
+        response
+            .json({ msg: "id: " + request.params.id + " Technical deleted"}) 
+            .json(technicians);
+    }else {
+        response.status(400).json({ msg: 'Technical not found'});
+    }  
+});
+
+//module.exports = router;
+
 /*//getTechnicianByAnyAttributr----Didn´t work
 
 app.get('api/technicians/:attribute/:value',(request,response) =>{
