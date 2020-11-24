@@ -4,18 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-
     "start": "node index",
-    "dev": "nodemon index"
+    "dev": "nodemon index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vhaiek/CaldAr.git"
   },
-
   "author": "eloy y nico",
-
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/vhaiek/CaldAr/issues"
@@ -23,8 +20,8 @@
   "homepage": "https://github.com/vhaiek/CaldAr#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "nodemon": "^2.0.6"
     "fs": "0.0.1-security",
+    "nodemon": "^2.0.6",
     "router": "^1.3.5"
   }
 }
