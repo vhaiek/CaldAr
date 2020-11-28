@@ -1,12 +1,28 @@
 const express = require('express');
-
 const app = express();
-
+const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
+const db = require('./app/models');
+const router = require('./app/routes');
 
-app.use('/api/boilers',require('./controllers/boilers'));
-app.use('/api/buildings', require('./controllers/buildings'));
-app.use('/api/technicians',require('./controllers/technicians.js'));
-//app.use('/api/company',require('./controllers/company'));
+// This help us to interpret body from request as a JSON 
+app.use(bodyParser.json());
 
-app.listen(PORT, () => console.log('working OK'));
+app.use(bodyParser.urlencoded({ extended: true}));
+
+db.mongoose
+    .connect(db.url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(() => {
+        console.log('Connected to DB');
+    })
+    .catch( (e) =>{
+        console.log('Error connecting to DB',e);
+        process.exit();
+    });
+
+app.use(router);
+
+app.listen(PORT,() => {console.log(`Server UP on localhost:${PORT}`);})
