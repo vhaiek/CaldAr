@@ -4,6 +4,9 @@ const router = require('express').Router();
 // Retrieve all technician
 router.get('/',technician.findAll);
 
+// Retrieve technician by name
+router.get('/name/:name',technician.findByName);
+
 // Create a new technician
 router.post('/',technician.create);
 

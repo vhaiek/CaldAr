@@ -5,10 +5,27 @@ module.exports = mongoose => {
            {    // These fields were added as an example. Replace them with the right ones.
                 id: {
                     type: Number,
-                    required: true
+                    required: true,
+                    unique: true
                 },
-                description: String,
-                type: Number
+                rol: String,
+                email: String,
+                fullname: {
+                    type: String,
+                    required: true,
+                },
+                phone: Number,
+                address: String,
+                boiler: [{
+                    type: mongoose.Schema.Types.ObjectId, 
+                    ref: 'boiler'
+                }],
+                capabilities: [{
+                    type: mongoose.Schema.Types.ObjectId, 
+                    ref: 'boiler_id'                   
+                }],
+                hour_rate: Number,
+                daily_capacity: Number
             },
             { timestamps: true }
         )

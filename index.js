@@ -13,7 +13,8 @@ app.use(bodyParser.urlencoded({ extended: true}));
 db.mongoose
     .connect(db.url, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true
     })
     .then(() => {
         console.log('Connected to DB');
