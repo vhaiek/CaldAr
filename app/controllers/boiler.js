@@ -66,6 +66,20 @@ exp.findAll = (req, res) => {
         });
 }
 
+//Delete a boiler by id
+exp.delete = (req, res) => {
+    const id = req.params.id;
+    Boiler.findOneAndRemove({id}, { useFindAndModify: false})
+        .then(data =>
+            res.send({ message: "Boiler was removed successfully."})
+        )
+        .catch(err => {
+            res.status(500).send({
+                message: "Error removing boiler with=" +id
+            });
+        });
+    };
+
 
 
 
@@ -74,6 +88,6 @@ exp.findAll = (req, res) => {
 
 exp.update = (req, res) => {res.send("Method not implemented")}
 
-exp.delete = (req, res) => {res.send("Method not implemented")}
+
 
 module.exports = exp;
