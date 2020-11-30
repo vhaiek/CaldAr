@@ -80,14 +80,34 @@ exp.delete = (req, res) => {
         });
     };
 
+    //Update a boiler by id
+exp.update = (req, res) => {
+    if (!req.body) {
+        return res.status(400).send({
+            message: "Data to update can not be empty"   
+        });
+    }
+    //Validate request
+    if (!req.body.id || !req.body.description || !req.body.type || !req.body.maintenance_rate || !req.body.hour_maintenance_cost || !req.body.hour_eventual_cost  ) {
+        res.status(400).send({ message: "Content can not be empty!"});
+        return;
+    }
 
+    const id = req.params.id;
 
-
-
-
-
-exp.update = (req, res) => {res.send("Method not implemented")}
-
-
+    Boiler.findOneAndUpdate({id}, req.body, { useFindAndModify: false})
+        .then(data => {
+            if (!data) {
+                res.status(404).send({
+                    message: "Cannot update Boiler with id=" + id + ". Maybe boiler was not found!"
+                });
+            }else res.send({ message: "Boiler was update successfylly."})
+        })
+        .catch(err => {
+         res.status(500).send({
+            message: "Error updating Boiler with id=" + id
+         });   
+        });
+    };
 
 module.exports = exp;

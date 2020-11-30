@@ -13,7 +13,7 @@ module.exports = mongoose => {
                     required: false
                 },
                 //type: id_boiler_type
-                Type: { 
+                type: { 
                     type: Number,
                     required: false
                 },
