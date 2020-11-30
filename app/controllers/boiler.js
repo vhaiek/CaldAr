@@ -3,7 +3,39 @@ const Boiler = db.boilers;
 
 const exp = {};
 
+//Create a new document
+exp.create = (req, res) => {
+    //Validate
+    if (!req.body.id || !req.body.description || !req.body.type || !req.body.maintenance_rate || !req.body.hour_maintenance_cost || !req.body.hour_eventual_cost  ) {
+        res.status(400).send({ message: "Content can not be empty!"});
+        return;
+    } 
+    
+    //Create a boiler 
+    const boiler = new Boiler({
+        id: req.body.id,      
+        description: req.body.description,
+        type: req.body.type, 
+        maintenance_rate: req.body.maintenance_rate,   
+        hour_maintenance_cost: req.body.hour_maintenance_cost,
+        hour_eventual_cost:  req.body.hour_eventual_cost   
+    });
 
+    //Save in DB
+    boiler 
+        .save(boiler)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating a boiler document"
+        });
+    });
+};
+
+//Get a specific resource by id
 exp.findOne = (req, res) => {
     Boiler.findOne({id: req.params.id})
         .then(data => {
@@ -39,7 +71,6 @@ exp.findAll = (req, res) => {
 
 
 
-exp.create = (req, res) => {res.send("Method not implemented")}
 
 exp.update = (req, res) => {res.send("Method not implemented")}
 
