@@ -1,32 +1,34 @@
+const { ObjectId } = require("mongodb");
+
 module.exports = mongoose => {
     const Boiler = mongoose.model(
         "boiler",
         mongoose.Schema(
            {    id: {
                     type: Number,
-                    required: true
+                    required: false
                 },
                 description: { 
                     type: String,
-                    required: true
+                    required: false
                 },
                 //type: id_boiler_type
                 Type: { 
                     type: Number,
                     required: false
                 },
-                dmaintenance_rate: { 
+                maintenance_rate: { 
                     type: String,
-                    required: true,
+                    required: false,
                     enum :["month","quarter","year"]
                 },
-                hour_maintaince_cost: {
+                hour_maintenance_cost: {
                     type: Number,
-                    required: true
+                    required: false
                 },
                 hour_eventual_cost: {
                     type: Number,
-                    required: true
+                    required: false
                 },
             },
             { timestamps: true }

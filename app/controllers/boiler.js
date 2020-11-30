@@ -20,8 +20,24 @@ exp.findOne = (req, res) => {
             })
         })
 }
-// The remaining methods are axplained in the last class video from 1:20
-exp.findAll = (req, res) => {res.send("Method not implemented")}
+// Send all the boilers from the DB
+exp.findAll = (req, res) => {
+    Boiler.find({})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                err.message || "Some error occurred"
+            });
+        });
+}
+
+
+
+
+
 
 exp.create = (req, res) => {res.send("Method not implemented")}
 
