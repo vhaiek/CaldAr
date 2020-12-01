@@ -1,7 +1,21 @@
 const db = require('../models');
+const building = require('../models/building');
 const Buildings = db.buildings;
 
 const exp = {};
+
+//find all buildins
+exp.findAll=(req,res) => {
+     Building.find({})
+     .then(data => {
+         res.send(data);
+     })
+     .catch((e) => {
+        res.status(500).send({
+            message: e.message || `Some error ocurred while find all building  `
+        })
+    })
+}
 
 //Find a single Building with an id 
 exp.findOne = (req, res) => {
