@@ -3,6 +3,7 @@ const company = db.companies;
 
 const exp = {};
 
+
 exp.findOne = (req, res) => {
     company.findOne({id: req.params.id})
         .then(data => {
