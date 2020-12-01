@@ -11,5 +11,6 @@ db.url = 'mongodb+srv://eloy1234:eloy1234@caldar.fd9wx.mongodb.net/CaldAr?retryW
 db.boilers = require('./boilers.js')(mongoose);
 //db.technicisns = require('./technicians.js')(mongoose);
 //db.buildings = require('./buildings.js')(mongoose);
+db.companies = require('./companies.js')(mongoose);
 
 module.exports = db;
