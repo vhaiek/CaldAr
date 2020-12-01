@@ -6,10 +6,8 @@ module.exports = mongoose => {
                     type: Number,
                     required: true
                 },
-                id_building: Number,
                 description: String,
                 skills: String,
-                stock: Number
             },
             { timestamps: true }
         )
