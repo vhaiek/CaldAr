@@ -2,29 +2,29 @@ module.exports = mongoose => {
   const company = mongoose.model(
     "company",
     mongoose.Schema(
-      {    // These fields were added as an example. Replace them with the right ones.
+      {   
       id_company: {
-        Type: Number,
+        type: Number,
         required: true
       },
       cuit: {
-        Type: Number,
+        type: Number,
         required: true
       },
       email: {
-        Type: String,
+        type: String,
         required: true
       },
       building:[{
-        Type: Number,
+        type: Number,
         required: true
       }],
       fiscal_address: {
-        Type: String,
-        required:true
+        type: String,
+        required: true
       },
       user: [{
-        Type: String,
+        type: String,
         required: true
       }],
       },
