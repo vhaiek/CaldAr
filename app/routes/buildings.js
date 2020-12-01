@@ -1,19 +1,19 @@
-const buildings = require('../controllers/buildings.js');
+const buildings = require('../controllers/building.js');
 const router = require('express').Router();
 
 // Retrieve all boilers
-router.get('/',boiler.findAll);
+router.get('/',buildings.findAll);
 
 // Create a new boiler
-router.post('/',boiler.create);
+router.post('/',buildings.create);
 
 // Retrieve a single boiler by Id
-router.get('/:id',boiler.findOne);
+router.get('/:id',buildings.findOne);
 
 // Update a boiler by Id
-router.put('/:id',boiler.update);
+router.put('/:id',buildings.update);
 
 // Delete a boiler by Id
-router.delete('/:id', boiler.delete);
+router.delete('/:id', buildings.delete);
 
 module.exports = router;
