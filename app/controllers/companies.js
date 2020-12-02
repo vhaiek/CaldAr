@@ -80,7 +80,41 @@ exp.create = (req, res) => {
 };
 
 // Update a company by Id
-exp.update = (req, res) => {res.send("Method not implemented")}
+
+exp.update = (req, res) => {
+  if(!req.body){
+    return res.status(400).send({
+      message: "Data to update can not be empty!"
+    });
+  }
+    //Validate request
+    const companyData = req.body;
+    //console.log(companyData);
+    const missingKey = companyKeys.find(key => !companyData[key]);
+    if(missingKey) {
+      res.status(400).send({ message: `Missing key ${missingKey}!`});
+      return;
+    }
+
+  const id = req.params.id;
+
+  Company.findOneAndUpdate({id_company:id}, companyData, {useFindAndModify: false})
+    .then(data=> {
+      console.log (data)
+      if(!data) {
+        res.status(404).send({
+          message: `Cannot update Company with id=${id}. Maybe Company was not found!`
+        });
+      } else {
+          res.send({message: "Company was updated succsessfully"});
+        }
+    })
+    .catch(() => {
+      res.status(500).send({
+        message: "Error updating Company with id=" + id 
+      });
+    });
+  };
 
 // Delete a company by Id
 exp.delete = (req, res) => {res.send("Method not implemented")}
