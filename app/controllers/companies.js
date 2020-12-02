@@ -1,11 +1,11 @@
 const db = require('../models');
-const company = db.companies;
+const Company = db.companies;
 
 const exp = {};
 
 // Retrieve a single company by Id
 exp.findOne = (req, res) => {
-    company.findOne({id_company: req.params.id})
+    Company.findOne({id_company: req.params.id})
         .then(data => {
             if(!data) {
                 return res.status(404).send({
@@ -23,7 +23,7 @@ exp.findOne = (req, res) => {
 
 //  Retrieve all companies from the database
 exp.findAll = (req, res) => {
-  company.find({})
+  Company.find({})
     .then(data =>{
       res.send(data);
     })
@@ -36,7 +36,48 @@ exp.findAll = (req, res) => {
 };
 
 // Create a company 
-exp.create = (req, res) => {res.send("Method not implemented")}
+
+const companyKeys = [
+  'building',
+  'user',
+  'id_company',
+  'cuit',
+  'email',
+  'fiscal_address'
+];
+
+exp.create = (req, res) => {
+  //Validate request
+  const companyData = req.body;
+  console.log(companyData);
+  const missingKey = companyKeys.find(key => !companyData[key]);
+  if(missingKey) {
+    res.status(400).send({ message: `Missing key ${missingKey}!`});
+    return;
+  }
+  //Create a Company
+  const constructionCompany = new Company ({
+    id_company: req.body.id_company,
+    building: req.body.building,
+    user: req.body.user,
+    cuit: req.body.cuit,
+    email: req.body.email,
+    fiscal_address: req.body.fiscal_address,
+  });
+
+  //Save company in the dataBase
+  constructionCompany
+  .save(constructionCompany)
+  .then(data => {
+      res.send(data);
+    })
+    .catch(err=> {
+      res.status(500).send({
+        message:
+        err.message || "Some error occurred while creating the Company."
+      });
+    });
+};
 
 // Update a company by Id
 exp.update = (req, res) => {res.send("Method not implemented")}
