@@ -10,7 +10,8 @@ module.exports = mongoose => {
                 skills: String,
             },
             { timestamps: true }
-        )
+        ),
+        "boilersType"
     )
     return BoilerType;
 }
