@@ -1,17 +1,17 @@
 module.exports = mongoose => {
-    const Buildings = mongoose.model(
-        "buildings",
+    const Building = mongoose.model(
+        "building",
         mongoose.Schema(
            {    
-               id_buildings: Number,
+               id_building: String,
                address: String,
                boilers: [],
                fullname: String,
-               phone: Number,
+               phone: String,
 
             },
             { timestamps: true }
         )
     )
-    return Buildings;
-}
+    return Building;
+};

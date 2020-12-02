@@ -1,6 +1,5 @@
 const db = require('../models');
-const building = require('../models/building');
-const Buildings = db.buildings;
+const Building = db.buildings;
 
 const exp = {};
 
@@ -19,7 +18,7 @@ exp.findAll=(req,res) => {
 
 //Find a single Building with an id 
 exp.findOne = (req, res) => {
-    Buildings.findOne({id: req.params.id})
+    Building.findOne({id: req.params.id})
         .then(data => {
             if(!data) {
                 return res.status(404).send({
@@ -43,7 +42,7 @@ exp.create = (req,res) => {
        res.status(400).send({message:'Content can not be empty!!'});
        return;
     }
-    const building = new Buildings({
+    const building = new Building({
         id:req.body.id,
         fullName: req.body.fullName,
         address:req.body.address,
@@ -79,7 +78,7 @@ exp.update = (req, res) => {
 
      const id= req.params.id;
     
-     building.finOneAndUpdate({id},req.body,{ useFindAndModify: flase })
+     Building.finOneAndUpdate({id},req.body,{ useFindAndModify: flase })
      .then(data =>{
          if (!data){
              res.status(400).send({
@@ -98,7 +97,7 @@ exp.update = (req, res) => {
 //Delete Building
 exp.delete =(req,res) =>{
     const id = req.params.id;
-    building.findOneAndRemove ({id},{useFindAndModify: false})
+    Building.findOneAndRemove ({id},{useFindAndModify: false})
     .then (data =>
         res.send({ message:'Buildin was delete successfully'})
         )
@@ -108,16 +107,5 @@ exp.delete =(req,res) =>{
             });
         });
 };
-
-
-
-// The remaining methods are axplained in the last class video from 1:20
-exp.findAll = (req, res) => {res.send("Method not implemented")}
-
-exp.create = (req, res) => {res.send("Method not implemented")}
-
-exp.update = (req, res) => {res.send("Method not implemented")}
-
-exp.delete = (req, res) => {res.send("Method not implemented")}
 
 module.exports = exp;
