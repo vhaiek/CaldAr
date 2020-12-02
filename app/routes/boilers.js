@@ -1,8 +1,9 @@
+const exp = require('../controllers/boiler.js');
 const boiler = require('../controllers/boiler.js');
 const router = require('express').Router();
 
 // Retrieve all boilers
-router.get('/',boiler.findAll);
+router.get('/all',boiler.findAll);
 
 // Create a new boiler
 router.post('/',boiler.create);
