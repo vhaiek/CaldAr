@@ -1,6 +1,4 @@
 const { ObjectId } = require("mongodb");
-//const db = require('./index');
-//const Type = db.boilersType;
 
 module.exports = mongoose => {
     const Boiler = mongoose.model(
@@ -15,10 +13,8 @@ module.exports = mongoose => {
                     required: false
                 },
                 type: { 
-                    //type: Type._id,
-                     type: Number,
-                    //ref: "users",
-                    required: true
+                    type: mongoose.Schema.Types.ObjectID,
+                    ref: "boilerType"
                 },
                 maintenance_rate: { 
                     type: String,
