@@ -117,6 +117,18 @@ exp.update = (req, res) => {
   };
 
 // Delete a company by Id
-exp.delete = (req, res) => {res.send("Method not implemented")}
+exp.delete = (req, res) => {
+  const id = req.params.id;
+  Company.findOneAndRemove({id_company:id}, {useFindAndModify: false})
+    .then(data =>
+      res.send({ message: "Company was removed successfully." })
+    )
+    .catch(() =>{
+      res.status(500).send({
+        message: "Error removing Company with id=" +id
+      });
+    });
+};
+  
 
 module.exports = exp;
