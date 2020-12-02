@@ -2,7 +2,7 @@ module.exports = mongoose => {
     const Technician = mongoose.model(
         "technician",
         mongoose.Schema(
-           {    // These fields were added as an example. Replace them with the right ones.
+           {    
                 id: {
                     type: Number,
                     required: true,
@@ -22,7 +22,7 @@ module.exports = mongoose => {
                 }],
                 capabilities: [{
                     type: mongoose.Schema.Types.ObjectId, 
-                    ref: 'boiler_id'                   
+                    ref: 'boilerType'                   
                 }],
                 hour_rate: Number,
                 daily_capacity: Number
