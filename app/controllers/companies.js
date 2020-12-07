@@ -49,7 +49,7 @@ const companyKeys = [
 ];
 
 exp.create = (req, res) => {
-  //Validate request
+  // Validate request
   const companyData = req.body;
   console.log(companyData);
   const missingKey = companyKeys.find((key) => !companyData[key]);
@@ -57,7 +57,7 @@ exp.create = (req, res) => {
     res.status(400).send({ message: `Missing key ${missingKey}!` });
     return;
   }
-  //Create a Company
+  // Create a Company
   const constructionCompany = new Company({
     id_company: req.body.id_company,
     building: req.body.building,
@@ -67,7 +67,7 @@ exp.create = (req, res) => {
     fiscal_address: req.body.fiscal_address,
   });
 
-  //Save company in the dataBase
+  // Save company in the dataBase
   constructionCompany
     .save(constructionCompany)
     .then((data) => {
@@ -89,9 +89,9 @@ exp.update = (req, res) => {
       message: 'Data to update can not be empty!',
     });
   }
-  //Validate request
+  // Validate request
   const companyData = req.body;
-  //console.log(companyData);
+  // console.log(companyData);
   const missingKey = companyKeys.find((key) => !companyData[key]);
   if (missingKey) {
     res.status(400).send({ message: `Missing key ${missingKey}!` });

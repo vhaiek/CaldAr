@@ -3,7 +3,7 @@ const Building = db.buildings;
 
 const exp = {};
 
-//find all buildins
+// find all buildins
 exp.findAll = (req, res) => {
   Building.find({})
     .then((data) => {
@@ -11,18 +11,18 @@ exp.findAll = (req, res) => {
     })
     .catch((e) => {
       res.status(500).send({
-        message: e.message || `Some error ocurred while find all building  `,
+        message: e.message || 'Some error ocurred while find all building ',
       });
     });
 };
 
-//Find a single Building with an id
+// Find a single Building with an id
 exp.findOne = (req, res) => {
   Building.findOne({ id: req.params.id })
     .then((data) => {
       if (!data) {
         return res.status(404).send({
-          message: `Building with id ${req.params.id} was not found`,
+          message: 'Building with id ${req.params.id} was not found',
         });
       }
       res.send(data);
@@ -31,12 +31,12 @@ exp.findOne = (req, res) => {
       res.status(500).send({
         message:
           e.message ||
-          `Some error ocurred while retrieving building with id ${req.params.id} `,
+          'Some error ocurred while retrieving building with id ${req.params.id} ',
       });
     });
 };
 
-//Created a new building
+// Created a new building
 exp.create = (req, res) => {
   if (
     !req.body.fullName ||
@@ -56,7 +56,7 @@ exp.create = (req, res) => {
     boilers: req.body.boliers,
   });
 
-  //Save Building in the databe
+  // Save Building in the databe
   building
     .save(building)
     .then((data) => {
@@ -66,12 +66,12 @@ exp.create = (req, res) => {
       res.status(500).send({
         message:
           e.message ||
-          `some error ocurrerd while creating building  ${req.params.id} `,
+          'some error ocurrerd while creating building  ${req.params.id} ',
       });
     });
 };
 
-//Update Building
+// Update Building
 
 exp.update = (req, res) => {
   if (!req.body) {
@@ -109,7 +109,7 @@ exp.update = (req, res) => {
     });
 };
 
-//Delete Building
+// Delete Building
 exp.delete = (req, res) => {
   const id = req.params.id;
   Building.findOneAndRemove({ id }, { useFindAndModify: false })

@@ -28,7 +28,7 @@ exp.findAll = (req, res) => {
     .then((data) => {
       if (data.length < 1) {
         return res.status(404).send({
-          message: `Technicians collection is empty`,
+          message: 'Technicians collection is empty',
         });
       }
       res.send(data);
@@ -37,7 +37,7 @@ exp.findAll = (req, res) => {
       res.status(500).send({
         message:
           e.message ||
-          `Some error ocurred while retrieving Technician collection`,
+          'Some error ocurred while retrieving Technician collection',
       });
     });
 };
@@ -50,14 +50,14 @@ exp.findByName = (req, res) => {
       );
       if (data.length < 1) {
         return res.status(404).send({
-          message: `There are no Technicians that satisfies this search`,
+          message: 'There are no Technicians that satisfies this search',
         });
       }
       res.send(data);
     })
     .catch((e) => {
       res.status(500).send({
-        message: e.message || `Some error ocurred while retrieving Technician`,
+        message: e.message || 'Some error ocurred while retrieving Technician',
       });
     });
 };
@@ -101,7 +101,7 @@ exp.update = (req, res) => {
   // Validate against empty body
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({
-      message: "Data can't be empty",
+      message: 'Data can´t be empty',
     });
   }
   Technician.findOneAndUpdate({ id: req.params.id }, req.body, {
@@ -110,7 +110,7 @@ exp.update = (req, res) => {
     .then((data) => {
       if (!data) {
         return res.status(404).send({
-          message: `Can't update Technician with id: ${req.params.id}`,
+          message: `Can´t update Technician with id: ${req.params.id}`,
         });
       }
       res.send({ message: 'Updated succesfully' });
@@ -119,7 +119,7 @@ exp.update = (req, res) => {
       res.status(500).send({
         message:
           e.message ||
-          `Some error ocurred while updating Technician with id ${req.params.id} `,
+          `Some error ocurred while updating Technician with id ${req.params.id}`,
       });
     });
 };
@@ -138,7 +138,7 @@ exp.delete = (req, res) => {
       }
       if (!item) {
         return res.status(404).send({
-          message: `Technician with id ${req.params.id} don't exist.`,
+          message: `Technician with id ${req.params.id} don´t exist.`,
         });
       }
       res.send({

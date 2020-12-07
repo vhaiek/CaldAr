@@ -1,4 +1,3 @@
-const exp = require('../controllers/boiler.js');
 const boiler = require('../controllers/boiler.js');
 const router = require('express').Router();
 
