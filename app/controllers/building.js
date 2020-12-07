@@ -3,7 +3,6 @@ const Building = db.buildings;
 
 const exp = {};
 
-// find all buildins
 exp.findAll = (req, res) => {
   Building.find({})
     .then((data) => {
@@ -16,7 +15,6 @@ exp.findAll = (req, res) => {
     });
 };
 
-// Find a single Building with an id
 exp.findOne = (req, res) => {
   Building.findOne({ id: req.params.id })
     .then((data) => {
@@ -36,7 +34,6 @@ exp.findOne = (req, res) => {
     });
 };
 
-// Created a new building
 exp.create = (req, res) => {
   if (
     !req.body.fullName ||
@@ -56,7 +53,6 @@ exp.create = (req, res) => {
     boilers: req.body.boliers,
   });
 
-  // Save Building in the databe
   building
     .save(building)
     .then((data) => {
@@ -70,8 +66,6 @@ exp.create = (req, res) => {
       });
     });
 };
-
-// Update Building
 
 exp.update = (req, res) => {
   if (!req.body) {
@@ -109,7 +103,6 @@ exp.update = (req, res) => {
     });
 };
 
-// Delete Building
 exp.delete = (req, res) => {
   const id = req.params.id;
   Building.findOneAndRemove({ id }, { useFindAndModify: false })

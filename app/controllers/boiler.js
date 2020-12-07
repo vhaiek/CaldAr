@@ -3,9 +3,7 @@ const Boiler = db.boilers;
 
 const exp = {};
 
-// Create a new document
 exp.create = (req, res) => {
-  // Validate
   if (
     !req.body.id ||
     !req.body.description ||
@@ -18,7 +16,6 @@ exp.create = (req, res) => {
     return;
   }
 
-  // Create a boiler
   const boiler = new Boiler({
     id: req.body.id,
     description: req.body.description,
@@ -28,7 +25,6 @@ exp.create = (req, res) => {
     hour_eventual_cost: req.body.hour_eventual_cost,
   });
 
-  // Save in DB
   boiler
     .save(boiler)
     .then((data) => {
@@ -42,7 +38,6 @@ exp.create = (req, res) => {
     });
 };
 
-// Get a specific resource by id
 exp.findOne = (req, res) => {
   Boiler.findOne({ id: req.params.id })
     .then((data) => {
@@ -61,7 +56,7 @@ exp.findOne = (req, res) => {
       });
     });
 };
-// Send all the boilers from the DB
+
 exp.findAll = (req, res) => {
   Boiler.find({})
     .then((data) => {
@@ -74,7 +69,6 @@ exp.findAll = (req, res) => {
     });
 };
 
-// Delete a boiler by id
 exp.delete = (req, res) => {
   const id = req.params.id;
   Boiler.findOneAndRemove({ id }, { useFindAndModify: false })
@@ -86,14 +80,12 @@ exp.delete = (req, res) => {
     });
 };
 
-// Update a boiler by id
 exp.update = (req, res) => {
   if (!req.body) {
     return res.status(400).send({
       message: 'Data to update can not be empty',
     });
   }
-  // Validate request
   if (
     !req.body.id ||
     !req.body.description ||

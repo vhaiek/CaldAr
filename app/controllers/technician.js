@@ -3,7 +3,6 @@ const Technician = db.technicians;
 
 const exp = {};
 
-// Bring a technician document
 exp.findOne = (req, res) => {
   Technician.findOne({ id: req.params.id })
     .then((data) => {
@@ -22,7 +21,7 @@ exp.findOne = (req, res) => {
       });
     });
 };
-// Bring the whole collection
+
 exp.findAll = (req, res) => {
   Technician.find()
     .then((data) => {
@@ -41,7 +40,7 @@ exp.findAll = (req, res) => {
       });
     });
 };
-// Bring the whole collection
+
 exp.findByName = (req, res) => {
   Technician.find()
     .then((data) => {
@@ -61,14 +60,12 @@ exp.findByName = (req, res) => {
       });
     });
 };
-// Create a new Technician document
+
 exp.create = (req, res) => {
-  // It's validated by the model too
   if (!req.body.id || !req.body.fullname) {
     return res.status(400).send({ message: 'ID and name fields are required' });
   }
 
-  // Create technician
   const tech = new Technician({
     id: req.body.id,
     rol: req.body.rol,
@@ -82,7 +79,6 @@ exp.create = (req, res) => {
     daily_capacity: req.body.dailyCapacity,
   });
 
-  // Save
   tech
     .save(tech)
     .then((data) => {
@@ -96,9 +92,8 @@ exp.create = (req, res) => {
       });
     });
 };
-// Update technician data
+
 exp.update = (req, res) => {
-  // Validate against empty body
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({
       message: 'Data can\'t be empty',
@@ -123,7 +118,7 @@ exp.update = (req, res) => {
       });
     });
 };
-// Remove by id
+
 exp.delete = (req, res) => {
   Technician.findOneAndRemove(
     { id: req.params.id },
