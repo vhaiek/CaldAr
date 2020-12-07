@@ -1,5 +1,3 @@
-const { ObjectId } = require('mongodb');
-
 module.exports = (mongoose) => {
   const Boiler = mongoose.model(
     'boiler',

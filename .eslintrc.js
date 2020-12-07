@@ -12,6 +12,7 @@ module.exports = {
   },
   'rules': {
     'semi': ['error', 'always'],
-    'quotes': ['error', 'single']
+    'quotes': ['error', 'single'],
+    'new-cap': ['error', { 'capIsNew': false }]
   },
 };
