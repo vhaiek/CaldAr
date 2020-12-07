@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const db = {};
 db.mongoose = mongoose;
-db.url = 'mongodb+srv://eloy1234:eloy1234@caldar.fd9wx.mongodb.net/CaldAr?retryWrites=true&w=majority';
+db.url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@caldar.fd9wx.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 db.boilers = require('./boilers.js')(mongoose);
 db.technicians = require('./technicians.js')(mongoose);
