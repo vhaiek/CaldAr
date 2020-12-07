@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const db = require('./app/models');
 const router = require('./app/routes');
-console.log('hi');
 
 app.use(bodyParser.json());
 
