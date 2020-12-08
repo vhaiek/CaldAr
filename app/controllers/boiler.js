@@ -5,7 +5,6 @@ const exp = {};
 
 exp.create = (req, res) => {
   if (
-    !req.body.id ||
     !req.body.description ||
     !req.body.type ||
     !req.body.maintenance_rate ||
@@ -17,7 +16,6 @@ exp.create = (req, res) => {
   }
 
   const boiler = new Boiler({
-    _id: req.body.id,
     description: req.body.description,
     type: req.body.type,
     maintenance_rate: req.body.maintenance_rate,
@@ -71,7 +69,7 @@ exp.findAll = (req, res) => {
 
 exp.delete = (req, res) => {
   const id = req.params.id;
-  Boiler.findOneAndRemove({ id }, { useFindAndModify: false })
+  Boiler.findOneAndRemove({ _id: id }, { useFindAndModify: false })
     .then((data) => res.send({ message: 'Boiler was removed successfully.' }))
     .catch((err) => {
       res.status(500).send({
@@ -87,7 +85,6 @@ exp.update = (req, res) => {
     });
   }
   if (
-    !req.body.id ||
     !req.body.description ||
     !req.body.type ||
     !req.body.maintenance_rate ||
@@ -100,7 +97,7 @@ exp.update = (req, res) => {
 
   const id = req.params.id;
 
-  Boiler.findOneAndUpdate({ _id }, req.body, { useFindAndModify: false })
+  Boiler.findOneAndUpdate({ _id: id }, req.body, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
         res.status(404).send({
