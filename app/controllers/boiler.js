@@ -4,17 +4,6 @@ const Boiler = db.boilers;
 const exp = {};
 
 exp.create = (req, res) => {
-  if (
-    !req.body.description ||
-    !req.body.type ||
-    !req.body.maintenance_rate ||
-    !req.body.hour_maintenance_cost ||
-    !req.body.hour_eventual_cost
-  ) {
-    res.status(400).send({ message: 'Content can not be empty!' });
-    return;
-  }
-
   const boiler = new Boiler({
     description: req.body.description,
     type: req.body.type,
@@ -22,6 +11,11 @@ exp.create = (req, res) => {
     hour_maintenance_cost: req.body.hour_maintenance_cost,
     hour_eventual_cost: req.body.hour_eventual_cost,
   });
+
+  const error = boiler.validateSync();
+  if (error != null) {
+    return res.status(400).send({ message: error.message });
+  }
 
   boiler
     .save(boiler)
@@ -79,36 +73,50 @@ exp.delete = (req, res) => {
 };
 
 exp.update = (req, res) => {
-  if (!req.body) {
+  if (Object.keys(req.body).length === 0) {
     return res.status(400).send({
       message: 'Data to update can not be empty',
     });
   }
-  if (
-    !req.body.description ||
-    !req.body.type ||
-    !req.body.maintenance_rate ||
-    !req.body.hour_maintenance_cost ||
-    !req.body.hour_eventual_cost
-  ) {
-    res.status(400).send({ message: 'Content can not be empty!' });
-    return;
-  }
 
   const id = req.params.id;
 
-  Boiler.findOneAndUpdate({ _id: id }, req.body, { useFindAndModify: false })
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
+  Boiler.findOne({ _id: id })
+    .then((boiler) => {
+      if (!boiler) {
+        return res.status(404).send({
           message:
             'Cannot update Boiler with id=' +
             id +
             '. Maybe boiler was not found!',
         });
-      } else res.send({ message: 'Boiler was update successfylly.' });
+      }
+      if (req.body.description) boiler.description = req.body.description;
+      if (req.body.type) boiler.type = req.body.type;
+      if (req.body.maintenance_rate)
+        boiler.maintenance_rate = req.body.maintenance_rate;
+      if (req.body.hour_maintenance_cost)
+        boiler.hour_maintenance_cost = req.body.hour_maintenance_cost;
+      if (req.body.hour_eventual_cost)
+        boiler.hour_eventual_cost = req.body.hour_eventual_cost;
+
+      const error = boiler.validateSync();
+      if (error != null) {
+        return res.status(400).send({ message: error.message });
+      }
+
+      boiler
+        .save(boiler)
+        .then((data) => {
+          res.send({ message: 'Boiler was update successfully.' });
+        })
+        .catch((e) => {
+          res.status(500).send({
+            message: 'Error updating Boiler with id=' + id,
+          });
+        });
     })
-    .catch((err) => {
+    .catch((e) => {
       res.status(500).send({
         message: 'Error updating Boiler with id=' + id,
       });

@@ -10,6 +10,7 @@ module.exports = (mongoose) => {
         type: {
           type: mongoose.Schema.Types.ObjectID,
           ref: 'boilerType',
+          required: true,
         },
         maintenance_rate: {
           type: String,

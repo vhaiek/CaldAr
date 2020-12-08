@@ -28,12 +28,6 @@ module.exports = (mongoose) => {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'buildings',
             required: true,
-            validate: {
-              validator: function (v) {
-                return /^([a-z0-9]{2,}[\s]+)+([0-9]+)$/.test(v);
-              },
-              message: 'Building id does not match',
-            },
           },
         ],
         fiscal_address: {
