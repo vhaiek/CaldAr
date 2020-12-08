@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prettier": "npx prettier --write ./app index.js",
     "start": "node index",
     "prettier": "npx prettier --write  ./app index.js",
     "lint": "eslint . ",
