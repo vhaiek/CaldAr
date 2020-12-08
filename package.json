@@ -6,6 +6,8 @@
   "scripts": {
     "prettier": "npx prettier --write ./app index.js",
     "start": "node index",
+    "prettier": "npx prettier --write  ./app index.js",
+    "lint": "eslint . ",
     "dev": "nodemon index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -44,4 +46,6 @@
     "*.js": "eslint --cache --fix",
     "*.{js,css,md}": "prettier --write"
   }
+
 }
+

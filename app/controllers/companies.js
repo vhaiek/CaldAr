@@ -4,7 +4,7 @@ const Company = db.companies;
 const exp = {};
 
 exp.findOne = (req, res) => {
-  Company.findOne({ id_company: req.params.id })
+  Company.findOne({ _id: req.params.id })
     .then((data) => {
       if (!data) {
         return res.status(404).send({
@@ -53,7 +53,7 @@ exp.create = (req, res) => {
     return;
   }
   const constructionCompany = new Company({
-    id_company: req.body.id_company,
+    _id: req.body._id,
     building: req.body.building,
     user: req.body.user,
     cuit: req.body.cuit,
@@ -89,7 +89,7 @@ exp.update = (req, res) => {
 
   const id = req.params.id;
 
-  Company.findOneAndUpdate({ id_company: id }, companyData, {
+  Company.findOneAndUpdate({ _id: id }, companyData, {
     useFindAndModify: false,
   })
     .then((data) => {
@@ -111,7 +111,7 @@ exp.update = (req, res) => {
 
 exp.delete = (req, res) => {
   const id = req.params.id;
-  Company.findOneAndRemove({ id_company: id }, { useFindAndModify: false })
+  Company.findOneAndRemove({ _id: id }, { useFindAndModify: false })
     .then((data) => res.send({ message: 'Company was removed successfully.' }))
     .catch(() => {
       res.status(500).send({

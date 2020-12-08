@@ -21,7 +21,7 @@ exp.findOne = (req, res) => {
       });
     });
 };
-
+// Bring the whole collection
 exp.findAll = (req, res) => {
   Technician.find()
     .then((data) => {
@@ -40,7 +40,6 @@ exp.findAll = (req, res) => {
       });
     });
 };
-
 exp.findByName = (req, res) => {
   Technician.find()
     .then((data) => {
@@ -60,12 +59,14 @@ exp.findByName = (req, res) => {
       });
     });
 };
-
+// Create a new Technician document
 exp.create = (req, res) => {
+  // It's validated by the model too
   if (!req.body.id || !req.body.fullname) {
     return res.status(400).send({ message: 'ID and name fields are required' });
   }
 
+  // Create technician
   const tech = new Technician({
     id: req.body.id,
     rol: req.body.rol,
@@ -79,6 +80,7 @@ exp.create = (req, res) => {
     daily_capacity: req.body.dailyCapacity,
   });
 
+  // Save
   tech
     .save(tech)
     .then((data) => {
@@ -92,11 +94,12 @@ exp.create = (req, res) => {
       });
     });
 };
-
+// Update technician data
 exp.update = (req, res) => {
+  // Validate against empty body
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({
-      message: 'Data can\'t be empty',
+      message: 'Data can´t be empty',
     });
   }
   Technician.findOneAndUpdate({ id: req.params.id }, req.body, {
@@ -105,7 +108,7 @@ exp.update = (req, res) => {
     .then((data) => {
       if (!data) {
         return res.status(404).send({
-          message: `Can't update Technician with id: ${req.params.id}`,
+          message: `Can´t update Technician with id: ${req.params.id}`,
         });
       }
       res.send({ message: 'Updated succesfully' });
@@ -114,11 +117,11 @@ exp.update = (req, res) => {
       res.status(500).send({
         message:
           e.message ||
-          `Some error ocurred while updating Technician with id ${req.params.id} `,
+          `Some error ocurred while updating Technician with id ${req.params.id}`,
       });
     });
 };
-
+// Remove by id
 exp.delete = (req, res) => {
   Technician.findOneAndRemove(
     { id: req.params.id },
@@ -133,7 +136,7 @@ exp.delete = (req, res) => {
       }
       if (!item) {
         return res.status(404).send({
-          message: `Technician with id ${req.params.id} don't exist.`,
+          message: `Technician with id ${req.params.id} don´t exist.`,
         });
       }
       res.send({

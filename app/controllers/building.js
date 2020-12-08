@@ -10,7 +10,7 @@ exp.findAll = (req, res) => {
     })
     .catch((e) => {
       res.status(500).send({
-        message: e.message || 'Some error ocurred while find all building  ',
+        message: e.message || 'Some error ocurred while find all building ',
       });
     });
 };
