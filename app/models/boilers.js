@@ -3,16 +3,6 @@ module.exports = (mongoose) => {
     'boiler',
     mongoose.Schema(
       {
-        id: {
-          type: Number,
-          required: true,
-          validate: {
-            validator: function (v) {
-              return /^[0-9]{1,}$/.test(v);
-            },
-            message: 'ID must have only numbers',
-          },
-        },
         description: {
           type: String,
           required: false,

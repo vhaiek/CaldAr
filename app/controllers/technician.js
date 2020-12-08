@@ -3,7 +3,6 @@ const Technician = db.technicians;
 
 const exp = {};
 
-// Bring a technician document
 exp.findOne = (req, res) => {
   Technician.findOne({ id: req.params.id })
     .then((data) => {
@@ -41,7 +40,6 @@ exp.findAll = (req, res) => {
       });
     });
 };
-// Bring the whole collection
 exp.findByName = (req, res) => {
   Technician.find()
     .then((data) => {

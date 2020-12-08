@@ -3,9 +3,8 @@ const Company = db.companies;
 
 const exp = {};
 
-// Retrieve a single company by Id
 exp.findOne = (req, res) => {
-  Company.findOne({ id_company: req.params.id })
+  Company.findOne({ _id: req.params.id })
     .then((data) => {
       if (!data) {
         return res.status(404).send({
@@ -23,7 +22,6 @@ exp.findOne = (req, res) => {
     });
 };
 
-//  Retrieve all companies from the database
 exp.findAll = (req, res) => {
   Company.find({})
     .then((data) => {
@@ -37,8 +35,6 @@ exp.findAll = (req, res) => {
     });
 };
 
-// Create a company
-
 const companyKeys = [
   'building',
   'user',
@@ -49,7 +45,6 @@ const companyKeys = [
 ];
 
 exp.create = (req, res) => {
-  // Validate request
   const companyData = req.body;
   console.log(companyData);
   const missingKey = companyKeys.find((key) => !companyData[key]);
@@ -57,9 +52,8 @@ exp.create = (req, res) => {
     res.status(400).send({ message: `Missing key ${missingKey}!` });
     return;
   }
-  // Create a Company
   const constructionCompany = new Company({
-    id_company: req.body.id_company,
+    _id: req.body._id,
     building: req.body.building,
     user: req.body.user,
     cuit: req.body.cuit,
@@ -67,7 +61,6 @@ exp.create = (req, res) => {
     fiscal_address: req.body.fiscal_address,
   });
 
-  // Save company in the dataBase
   constructionCompany
     .save(constructionCompany)
     .then((data) => {
@@ -81,17 +74,13 @@ exp.create = (req, res) => {
     });
 };
 
-// Update a company by Id
-
 exp.update = (req, res) => {
   if (!req.body) {
     return res.status(400).send({
       message: 'Data to update can not be empty!',
     });
   }
-  // Validate request
   const companyData = req.body;
-  // console.log(companyData);
   const missingKey = companyKeys.find((key) => !companyData[key]);
   if (missingKey) {
     res.status(400).send({ message: `Missing key ${missingKey}!` });
@@ -100,7 +89,7 @@ exp.update = (req, res) => {
 
   const id = req.params.id;
 
-  Company.findOneAndUpdate({ id_company: id }, companyData, {
+  Company.findOneAndUpdate({ _id: id }, companyData, {
     useFindAndModify: false,
   })
     .then((data) => {
@@ -120,10 +109,9 @@ exp.update = (req, res) => {
     });
 };
 
-// Delete a company by Id
 exp.delete = (req, res) => {
   const id = req.params.id;
-  Company.findOneAndRemove({ id_company: id }, { useFindAndModify: false })
+  Company.findOneAndRemove({ _id: id }, { useFindAndModify: false })
     .then((data) => res.send({ message: 'Company was removed successfully.' }))
     .catch(() => {
       res.status(500).send({

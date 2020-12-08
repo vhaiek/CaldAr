@@ -3,32 +3,59 @@ module.exports = (mongoose) => {
     'company',
     mongoose.Schema(
       {
-        id_company: {
-          type: Number,
-          required: true,
-        },
         cuit: {
           type: Number,
-          required: true,
+          required: false,
+          validate: {
+            validator: function (v) {
+              return /^[0-9]+$/.test(v);
+            },
+            message: 'CUIT must have only numbers',
+          },
         },
         email: {
           type: String,
           required: true,
+          validate: {
+            validator: function (v) {
+              return /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/.test(v);
+            },
+            message: 'Email format is wrong',
+          },
         },
         building: [
           {
-            type: Number,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'buildings',
             required: true,
+            validate: {
+              validator: function (v) {
+                return /^([a-z0-9]{2,}[\s]+)+([0-9]+)$/.test(v);
+              },
+              message: 'Building id does not match',
+            },
           },
         ],
         fiscal_address: {
           type: String,
           required: true,
+          validate: {
+            validator: function (v) {
+              return /^([a-z0-9]{2,}[\s]+)+([0-9]+)$/.test(v);
+            },
+            message: 'Fiscal Address format is wrong',
+          },
         },
         user: [
           {
             type: String,
-            required: true,
+            required: false,
+            validate: {
+              validator: function (v) {
+                return /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/.test(v);
+              },
+              message: 'User main contain only letters',
+            },
           },
         ],
       },

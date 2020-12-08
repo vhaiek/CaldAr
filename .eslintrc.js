@@ -1,18 +1,16 @@
 module.exports = {
-  'env': {
-    'browser': true,
-    'es2021': true,
+  env: {
+    browser: true,
+    es2021: true,
   },
-  'extends': [
-    'google',
-    'prettier'
-  ],
-  'parserOptions': {
-    'ecmaVersion': 12,
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: 'module',
   },
-  'rules': {
-    'semi': ['error', 'always'],
-    'quotes': ['error', 'single'],
-    'new-cap': ['error', { 'capIsNew': false }]
+  rules: {
+    semi: ['error', 'always'],
+    quotes: ['error', 'single'],
+    'new-cap': ['error', { capIsNew: false }],
   },
+  extends: ['google', 'prettier'],
 };
