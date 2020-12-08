@@ -1,10 +1,9 @@
 const db = require('../models');
 const Technician = db.technicians;
-
 const exp = {};
 
 exp.findOne = (req, res) => {
-  Technician.findOne({ id: req.params.id })
+  Technician.findOne({ _id: req.params.id })
     .then((data) => {
       if (!data) {
         return res.status(404).send({
@@ -21,7 +20,7 @@ exp.findOne = (req, res) => {
       });
     });
 };
-// Bring the whole collection
+
 exp.findAll = (req, res) => {
   Technician.find()
     .then((data) => {
@@ -40,6 +39,7 @@ exp.findAll = (req, res) => {
       });
     });
 };
+
 exp.findByName = (req, res) => {
   Technician.find()
     .then((data) => {
@@ -59,16 +59,9 @@ exp.findByName = (req, res) => {
       });
     });
 };
-// Create a new Technician document
-exp.create = (req, res) => {
-  // It's validated by the model too
-  if (!req.body.id || !req.body.fullname) {
-    return res.status(400).send({ message: 'ID and name fields are required' });
-  }
 
-  // Create technician
+exp.create = (req, res) => {
   const tech = new Technician({
-    id: req.body.id,
     rol: req.body.rol,
     email: req.body.email,
     fullname: req.body.fullname,
@@ -76,11 +69,15 @@ exp.create = (req, res) => {
     address: req.body.address,
     boiler: req.body.boiler,
     capabilities: req.body.capabilities,
-    hour_rate: req.body.hourRate,
-    daily_capacity: req.body.dailyCapacity,
+    hour_rate: req.body.hour_rate,
+    daily_capacity: req.body.daily_capacity,
   });
 
-  // Save
+  const error = tech.validateSync();
+  if (error != null) {
+    return res.status(400).send({ message: error.message });
+  }
+
   tech
     .save(tech)
     .then((data) => {
@@ -94,37 +91,62 @@ exp.create = (req, res) => {
       });
     });
 };
-// Update technician data
+
 exp.update = (req, res) => {
-  // Validate against empty body
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({
-      message: 'Data can´t be empty',
+      message: 'Data can not be empty',
     });
   }
-  Technician.findOneAndUpdate({ id: req.params.id }, req.body, {
-    useFindAndModify: false,
-  })
-    .then((data) => {
-      if (!data) {
+
+  Technician.findOne({ _id: req.params.id })
+    .then((tech) => {
+      if (!tech) {
         return res.status(404).send({
-          message: `Can´t update Technician with id: ${req.params.id}`,
+          message: `Technician with id ${req.params.id} was not found`,
         });
       }
-      res.send({ message: 'Updated succesfully' });
+      if (req.body.rol) tech.rol = req.body.rol;
+      if (req.body.email) tech.email = req.body.email;
+      if (req.body.fullname) tech.fullname = req.body.fullname;
+      if (req.body.phone) tech.phone = req.body.phone;
+      if (req.body.address) tech.address = req.body.address;
+      if (req.body.boiler) tech.boiler = req.body.boiler;
+      if (req.body.capabilities) tech.capabilities = req.body.capabilities;
+      if (req.body.hour_rate) tech.hour_rate = req.body.hour_rate;
+      if (req.body.daily_capacity)
+        tech.daily_capacity = req.body.daily_capacity;
+
+      const error = tech.validateSync();
+      if (error != null) {
+        return res.status(400).send({ message: error.message });
+      }
+
+      tech
+        .save(tech)
+        .then((data) => {
+          res.send({ message: 'Updated successfully' });
+        })
+        .catch((e) => {
+          res.status(500).send({
+            message:
+              e.message ||
+              `Some error ocurred while updating Technician with id ${req.params.id} `,
+          });
+        });
     })
     .catch((e) => {
       res.status(500).send({
         message:
           e.message ||
-          `Some error ocurred while updating Technician with id ${req.params.id}`,
+          `Some error ocurred while retrieving Technician with id ${req.params.id} `,
       });
     });
 };
-// Remove by id
+
 exp.delete = (req, res) => {
   Technician.findOneAndRemove(
-    { id: req.params.id },
+    { _id: req.params.id },
     { useFindAndModify: false },
     (e, item) => {
       if (e) {
@@ -136,11 +158,11 @@ exp.delete = (req, res) => {
       }
       if (!item) {
         return res.status(404).send({
-          message: `Technician with id ${req.params.id} don´t exist.`,
+          message: `Technician with id ${req.params.id} don't exist.`,
         });
       }
       res.send({
-        message: `Technician with id ${req.params.id} was removed succesfully.`,
+        message: `Technician with id ${req.params.id} was removed successfully.`,
       });
     }
   );
