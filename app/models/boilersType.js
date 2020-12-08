@@ -3,12 +3,14 @@ module.exports = (mongoose) => {
     'boilerType',
     mongoose.Schema(
       {
-        id_boiler_type: {
-          type: Number,
-          required: true,
+        description: {
+          type: String,
+          require: true,
         },
-        description: String,
-        skills: String,
+        skills: {
+          type: String,
+          require: true,
+        },
       },
       { timestamps: true }
     ),
