@@ -1,18 +1,11 @@
-const jwt = require ('jsonwebtoken');
-const models = require ('../models');
+const firebase = require ('../firebase');
 
-const checkAuth = async (req, res, next)=>{
-    try{
-        const { token} = req.headers;
-        const decoded = await jwt.verify(token, process.env.JWT_KEY, null);
-        const userToken = await models.User.findById(decoded.userId, 'token').exec();
-        if (token !== userToken.token) throw new Error ('Invalid Token');
-        next();
-    } catch (error) {
-        res.status(401).json({
-            message: 'Unauthorize',
-        });
-    }
+const authMiddleware =  (req, res, next)=>{
+    const { token } = req.headers;
+        if(!token) return res.status(400).json({message:'Provide a token'});
+        return firebase.auth().verifyIdToken(token)
+        .then (()=> next())
+        .catch((error)=> res.status(401).json({message: err}));
 };
 
-module.exports = checkAuth;
+module.exports = authMiddleware;

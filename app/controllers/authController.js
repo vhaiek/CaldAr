@@ -1,4 +1,4 @@
-const bcypt = require ('bcrypt');
+ /*const bcypt = require ('bcrypt');
 const jwt = require('jasonwebtoken');
 const models = require('../models');
 
@@ -69,4 +69,4 @@ module.exports = {
     login,
     logout
 };
-
+*/
