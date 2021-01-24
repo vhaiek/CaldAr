@@ -1,10 +1,11 @@
 const company = require('../controllers/companies.js');
 const router = require('express').Router();
+const authMiddleware = require('../middlewares/authMiddleware');
 
-router.get('/', company.findAll);
-router.post('/', company.create);
-router.get('/:id', company.findOne);
-router.put('/:id', company.update);
-router.delete('/:id', company.delete);
+router.get('/', authMiddleware, company.findAll);
+router.post('/', authMiddleware, company.create);
+router.get('/:id', authMiddleware, company.findOne);
+router.put('/:id', authMiddleware, company.update);
+router.delete('/:id', authMiddleware, company.delete);
 
 module.exports = router;

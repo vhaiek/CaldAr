@@ -1,10 +1,11 @@
 const boiler = require('../controllers/boiler.js');
 const router = require('express').Router();
+const authMiddleware = require('../middlewares/authMiddleware');
 
-router.get('/', boiler.findAll);
-router.post('/', boiler.create);
-router.get('/:id', boiler.findOne);
-router.put('/:id', boiler.update);
-router.delete('/:id', boiler.delete);
+router.get('/', authMiddleware, boiler.findAll);
+router.post('/', authMiddleware, boiler.create);
+router.get('/:id', authMiddleware, boiler.findOne);
+router.put('/:id', authMiddleware, boiler.update);
+router.delete('/:id', authMiddleware, boiler.delete);
 
 module.exports = router;

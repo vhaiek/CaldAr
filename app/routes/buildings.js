@@ -1,11 +1,11 @@
 const building = require('../controllers/building.js');
-
 const router = require('express').Router();
+const authMiddleware = require('../middlewares/authMiddleware');
 
-router.get('/', building.findAll);
-router.post('/', building.create);
-router.get('/:id', building.findOne);
-router.put('/:id', building.update);
-router.delete('/:id', building.delete);
+router.get('/', authMiddleware, building.findAll);
+router.post('/', authMiddleware, building.create);
+router.get('/:id', authMiddleware, building.findOne);
+router.put('/:id', authMiddleware, building.update);
+router.delete('/:id', authMiddleware, building.delete);
 
 module.exports = router;

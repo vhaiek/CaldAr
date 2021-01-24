@@ -1,11 +1,12 @@
 const technician = require('../controllers/technician.js');
 const router = require('express').Router();
+const authMiddleware = require('../middlewares/authMiddleware');
 
-router.get('/', technician.findAll);
-router.get('/name/:name', technician.findByName);
-router.post('/', technician.create);
-router.get('/:id', technician.findOne);
-router.put('/:id', technician.update);
-router.delete('/:id', technician.delete);
+router.get('/', authMiddleware, technician.findAll);
+router.get('/name/:name', authMiddleware, technician.findByName);
+router.post('/', authMiddleware, technician.create);
+router.get('/:id', authMiddleware, technician.findOne);
+router.put('/:id', authMiddleware, technician.update);
+router.delete('/:id', authMiddleware, technician.delete);
 
 module.exports = router;
